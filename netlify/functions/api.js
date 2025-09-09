@@ -11,9 +11,10 @@ app.use(express.json());
 // Simple test routes
 app.get('/', (req, res) => {
   res.json({
-    message: 'Expense Tracker API is running!',
+    message: 'Expense Tracker API is running! (Clean deployment)',
     timestamp: new Date().toISOString(),
-    version: '1.0.0'
+    version: '1.0.1',
+    status: 'WORKING'
   });
 });
 
