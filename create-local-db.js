@@ -4,20 +4,20 @@ const { Pool } = require('pg');
 
 // Connection for creating database (connects to default 'postgres' database)
 const createDbPool = new Pool({
-  host: 'localhost',
-  port: 5432,
+  host: process.env.DB_HOST || 'localhost',
+  port: process.env.DB_PORT || 5432,
   database: 'postgres', // Connect to default database to create new one
-  user: process.env.USER || 'postgres', // Use current user or postgres
-  password: process.env.DB_ADMIN_PASSWORD || '', // Usually empty for local
+  user: process.env.DB_USER || 'postgres', // Use current user or postgres
+  password: process.env.DB_PASSWORD || '', // Usually empty for local
 });
 
 // Connection for the actual database
 const dbPool = new Pool({
-  host: 'localhost',
-  port: 5432,
+  host: process.env.DB_HOST || 'localhost',
+  port: process.env.DB_PORT || 5432,
   database: 'expensetracker_local',
-  user: process.env.USER || 'postgres',
-  password: process.env.DB_ADMIN_PASSWORD || '',
+  user: process.env.DB_USER || 'postgres',
+  password: process.env.DB_PASSWORD || '',
 });
 
 async function createLocalDatabase() {

@@ -51,7 +51,7 @@ async function createTestUser() {
           console.log('   Username: ram');
           console.log('   Password: ram');
           console.log('\nTest with:');
-          console.log('   curl -X GET http://localhost:8080/all -H "Authorization: Basic $(echo -n \'ram:ram\' | base64)"');
+          console.log(`   curl -X GET http://localhost:${process.env.PORT || '8080'}/all -H "Authorization: Basic $(echo -n 'ram:ram' | base64)")`);
         }
       }
       
@@ -69,3 +69,4 @@ async function createTestUser() {
 }
 
 createTestUser();
+

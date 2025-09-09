@@ -51,28 +51,29 @@ for (const step of buildSteps) {
   }
 }
 
-// Create production environment file
-console.log('📝 Creating production environment file...');
+// Create production environment template file
+console.log('📝 Creating production environment template file...');
 const prodEnvContent = `# Production Database Configuration
-DB_HOST=localhost
-DB_PORT=5432
-DB_NAME=postgres
-DB_USER=postgres
-DB_PASSWORD=0000
+# Configure these values based on your deployment environment
+DB_HOST=your_database_host
+DB_PORT=your_database_port
+DB_NAME=your_database_name
+DB_USER=your_database_user
+DB_PASSWORD=your_database_password
 
 # Server Configuration
-PORT=8080
+PORT=your_server_port
 NODE_ENV=production
 
 # CORS Configuration
-CORS_ORIGIN=http://localhost:5173
+CORS_ORIGIN=your_frontend_url
 
 # Production Settings
 LOG_LEVEL=info
 `;
 
-fs.writeFileSync(path.join('dist', '.env.production'), prodEnvContent);
-console.log('✅ Production environment file created\n');
+fs.writeFileSync(path.join('dist', '.env.template'), prodEnvContent);
+console.log('✅ Production environment template file created\n');
 
 // Install production dependencies
 console.log('📥 Installing production dependencies...');
