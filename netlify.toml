@@ -1,11 +1,10 @@
 [build]
-  command = "npm run build:netlify"
+  command = "npm install"
   functions = "netlify/functions"
   publish = "public"
 
 [build.environment]
   NODE_VERSION = "18"
-  SECRETS_SCAN_OMIT_KEYS = "DB_NAME,PORT,NODE_ENV,CORS_ORIGIN"
 
 [[redirects]]
   from = "/api/*"
@@ -16,13 +15,3 @@
   from = "/*"
   to = "/index.html"
   status = 200
-
-[functions]
-  node_bundler = "esbuild"
-  external_node_modules = ["pg-native"]
-  included_files = ["src/**", "config/**"]
-
-[dev]
-  command = "npm run dev"
-  functions = "netlify/functions"
-  publish = "public"
