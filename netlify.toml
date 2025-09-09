@@ -20,6 +20,7 @@
 [functions]
   node_bundler = "esbuild"
   external_node_modules = ["pg-native"]
+  included_files = ["src/**", "config/**"]
 
 [dev]
   command = "npm run dev"

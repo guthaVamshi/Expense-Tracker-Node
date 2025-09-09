@@ -8,7 +8,7 @@
     "dev": "nodemon src/server.js",
     "build": "npm run build:simple",
     "build:simple": "node build.js",
-    "build:netlify": "mkdir -p public && echo 'API is running on Netlify Functions' > public/index.html",
+    "build:netlify": "mkdir -p public && echo 'API is running on Netlify Functions' > public/index.html && npm install",
     "build:webpack": "webpack --mode production",
     "clean": "rm -rf dist",
     "start:prod": "cd dist && node src/server.js",
