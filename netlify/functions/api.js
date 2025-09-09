@@ -21,9 +21,9 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Routes
-app.use('/.netlify/functions/api', expenseRoutes);
-app.use('/.netlify/functions/api', userRoutes);
+// Routes - Netlify Functions automatically handle the /.netlify/functions/api prefix
+app.use('/', expenseRoutes);
+app.use('/', userRoutes);
 
 // Global error handler
 app.use((err, req, res, next) => {
@@ -49,10 +49,21 @@ const initializeDatabase = async () => {
       console.log('Database initialized successfully');
     } catch (error) {
       console.error('Failed to initialize database:', error);
-      throw error;
+      // Don't throw error - let API work without database for testing
+      console.log('API will continue without database connection');
     }
   }
 };
+
+// Add a health check endpoint
+app.get('/health', (req, res) => {
+  res.json({
+    status: 'OK',
+    message: 'Expense Tracker API is running on Netlify Functions',
+    timestamp: new Date().toISOString(),
+    database: dbInitialized ? 'Connected' : 'Not Connected'
+  });
+});
 
 // Serverless handler
 const handler = serverless(app, {
@@ -60,8 +71,11 @@ const handler = serverless(app, {
 });
 
 module.exports.handler = async (event, context) => {
-  // Initialize database on first request
-  await initializeDatabase();
+  // Set execution context for serverless
+  context.callbackWaitsForEmptyEventLoop = false;
+  
+  // Initialize database on first request (non-blocking)
+  initializeDatabase().catch(console.error);
   
   // Handle the request
   return await handler(event, context);
